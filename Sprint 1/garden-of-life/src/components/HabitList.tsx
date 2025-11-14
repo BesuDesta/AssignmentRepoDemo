@@ -1,5 +1,4 @@
-import React from 'react';
-import { HabitState } from '../types';
+import type { HabitState } from '../types';
 
 interface HabitListProps {
   habits: HabitState[];

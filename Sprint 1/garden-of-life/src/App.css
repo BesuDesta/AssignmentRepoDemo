@@ -1,42 +1,119 @@
-#root {
-  max-width: 1280px;
+.app {
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+}
+
+header {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+header h1 {
+  margin-bottom: 0.5rem;
 }
 
-@keyframes logo-spin {
+.completion-indicator {
+  color: #888;
+  font-size: 1rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.garden {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.garden h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.garden [data-testid="garden-plot"] {
+  min-height: 100px;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.plant {
+  font-size: 2rem;
+  margin: 0.5rem;
+  display: inline-block;
+  animation: grow 0.3s ease-out;
+}
+
+@keyframes grow {
   from {
-    transform: rotate(0deg);
+    transform: scale(0);
   }
   to {
-    transform: rotate(360deg);
+    transform: scale(1);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+.habit-list {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.habit-list h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.habit-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.habit-list li {
+  margin-bottom: 0.75rem;
+}
+
+.habit-list label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+
+.habit-list label:hover {
+  color: #646cff;
+}
+
+.habit-list input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.75rem;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+  .garden {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  
+  .garden [data-testid="garden-plot"] {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  .habit-list {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
 }

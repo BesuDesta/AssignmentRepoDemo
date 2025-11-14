@@ -1,5 +1,4 @@
-import React from 'react';
-import { GardenState } from '../types';
+import type { GardenState } from '../types';
 
 interface GardenProps {
   garden: GardenState;

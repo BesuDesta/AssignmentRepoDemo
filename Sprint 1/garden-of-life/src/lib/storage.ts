@@ -1,7 +1,8 @@
-import { AppState, HabitState, GardenState, HabitId } from '../types';
+import type { AppState, HabitState } from '../types';
 import { getTodayKey } from './date';
 
 const STORAGE_KEY = 'garden-of-life-data';
+const LAST_LOGIN_KEY = 'garden-of-life-last-login';
 
 export function getStorageKey(): string {
   return `${STORAGE_KEY}-${getTodayKey()}`;
@@ -20,8 +21,26 @@ export function loadTodaysData(): AppState | null {
 export function saveTodaysData(state: AppState): void {
   try {
     localStorage.setItem(getStorageKey(), JSON.stringify(state));
+    localStorage.setItem(LAST_LOGIN_KEY, getTodayKey());
   } catch (error) {
     console.error('Failed to save data to localStorage:', error);
+  }
+}
+
+export function getLastLoginDate(): string | null {
+  try {
+    return localStorage.getItem(LAST_LOGIN_KEY);
+  } catch (error) {
+    console.error('Failed to load last login date:', error);
+    return null;
+  }
+}
+
+export function saveLastLoginDate(date: string): void {
+  try {
+    localStorage.setItem(LAST_LOGIN_KEY, date);
+  } catch (error) {
+    console.error('Failed to save last login date:', error);
   }
 }
 
@@ -46,5 +65,31 @@ export function getInitialState(): AppState {
     habits: getDefaultHabits(),
     garden: { plants: 0 },
     date: getTodayKey(),
+    lastLoginDate: getTodayKey(),
+    streak: 0,
   };
+}
+
+export function applyDecay(currentPlants: number, daysMissed: number): number {
+  // BR02: one plant per missed day
+  const plantsToRemove = daysMissed;
+  const newPlantCount = Math.max(0, currentPlants - plantsToRemove);
+  return newPlantCount;
+}
+
+export function loadPreviousGardenState(): { plants: number } | null {
+  try {
+    const lastLogin = getLastLoginDate();
+    if (!lastLogin) return null;
+    
+    const key = `${STORAGE_KEY}-${lastLogin}`;
+    const data = localStorage.getItem(key);
+    if (!data) return null;
+    
+    const parsed = JSON.parse(data) as AppState;
+    return parsed.garden;
+  } catch (error) {
+    console.error('Failed to load previous garden state:', error);
+    return null;
+  }
 }

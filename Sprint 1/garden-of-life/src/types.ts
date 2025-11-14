@@ -14,4 +14,6 @@ export interface AppState {
   habits: HabitState[];
   garden: GardenState;
   date: string;
+  lastLoginDate?: string;
+  streak?: number;
 }

@@ -3,7 +3,7 @@ import { HabitList } from './components/HabitList'
 import { Garden } from './components/Garden'
 import { getInitialState, saveTodaysData } from './lib/storage'
 import { getTodayKey } from './lib/date'
-import { AppState, HabitId } from './types'
+import type { AppState } from './types'
 import './App.css'
 
 function App() {
