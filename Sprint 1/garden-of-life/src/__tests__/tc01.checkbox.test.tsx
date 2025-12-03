@@ -55,21 +55,22 @@ describe('TC01 - Checkbox Functionality', () => {
     expect(gardenPlot).toHaveTextContent('🌱')
   })
 
-  it('should not allow checking the same habit twice', () => {
+  it('should not allow unchecking a habit once checked', () => {
     render(<App />)
-    
+
     const drinkWaterCheckbox = screen.getByTestId('habit-drink-water')
     const completionIndicator = screen.getByTestId('completion-indicator')
     const gardenPlot = screen.getByTestId('garden-plot')
-    
+
     fireEvent.click(drinkWaterCheckbox)
     expect(drinkWaterCheckbox).toBeChecked()
     expect(completionIndicator).toHaveTextContent('Habits completed: 1/5')
-    
+
+    // Try to uncheck - should remain checked
     fireEvent.click(drinkWaterCheckbox)
     expect(drinkWaterCheckbox).toBeChecked()
     expect(completionIndicator).toHaveTextContent('Habits completed: 1/5')
-    
+
     const plants = gardenPlot.querySelectorAll('.plant')
     expect(plants).toHaveLength(1)
   })

@@ -81,15 +81,44 @@ export function loadPreviousGardenState(): { plants: number } | null {
   try {
     const lastLogin = getLastLoginDate();
     if (!lastLogin) return null;
-    
+
     const key = `${STORAGE_KEY}-${lastLogin}`;
     const data = localStorage.getItem(key);
     if (!data) return null;
-    
+
     const parsed = JSON.parse(data) as AppState;
     return parsed.garden;
   } catch (error) {
     console.error('Failed to load previous garden state:', error);
     return null;
+  }
+}
+
+export function loadPreviousAppState(): AppState | null {
+  try {
+    const lastLogin = getLastLoginDate();
+    if (!lastLogin) return null;
+
+    const key = `${STORAGE_KEY}-${lastLogin}`;
+    const data = localStorage.getItem(key);
+    if (!data) return null;
+
+    return JSON.parse(data) as AppState;
+  } catch (error) {
+    console.error('Failed to load previous app state:', error);
+    return null;
+  }
+}
+
+export function checkIfAllHabitsCompletedYesterday(): boolean {
+  try {
+    const previousState = loadPreviousAppState();
+    if (!previousState) return false;
+
+    const allCompleted = previousState.habits.every(h => h.completed);
+    return allCompleted;
+  } catch (error) {
+    console.error('Failed to check previous habits:', error);
+    return false;
   }
 }
